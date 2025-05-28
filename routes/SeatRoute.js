@@ -6,6 +6,7 @@ import {
   updateSeat,
   deleteSeat,
   getSeatStatusById,
+  getAllSeatStatusByScheduleId,
 } from "../controllers/SeatController.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.put("/seats/:id", updateSeat);
 router.delete("/seats/:id", deleteSeat);
 
 router.get("/seats/:id/status", getSeatStatusById); // mengetahui status kursi
+router.get("/seats/schedule/:scheduleId/status", getAllSeatStatusByScheduleId); // mengetahui status kursi berdasarkan id schedule
 
 export default router;
