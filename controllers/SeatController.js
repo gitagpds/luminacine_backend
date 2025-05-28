@@ -170,6 +170,46 @@ async function getSeatStatusById(req, res) {
   }
 }
 
+// GET all seat statuses by scheduleId
+async function getAllSeatStatusByScheduleId(req, res) {
+  try {
+    const { scheduleId } = req.params;
+
+    const seats = await Seat.findAll({ where: { id_schedule: scheduleId } });
+
+    if (seats.length === 0) {
+      return res.status(404).json({
+        status: "Error",
+        message: "Tidak ada kursi untuk schedule tersebut 😮",
+      });
+    }
+
+    // Cek status booking untuk setiap seat
+    const seatsWithStatus = await Promise.all(
+      seats.map(async (seat) => {
+        const isBooked = await BookingSeat.findOne({ where: { id_seat: seat.id_seat } });
+        return {
+          id_seat: seat.id_seat,
+          seat_code: seat.seat_code,
+          status: isBooked ? "booked" : "available",
+        };
+      })
+    );
+
+    return res.status(200).json({
+      status: "Success",
+      message: `Semua status kursi untuk schedule ${scheduleId}`,
+      data: seatsWithStatus,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+
 export {
   getSeats,
   getSeatsByScheduleId,
@@ -177,4 +217,5 @@ export {
   updateSeat,
   deleteSeat,
   getSeatStatusById,
+  getAllSeatStatusByScheduleId,
 };
