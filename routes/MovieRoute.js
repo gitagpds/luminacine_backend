@@ -14,10 +14,8 @@ const router = express.Router();
 router.get("/movies", getMovies);
 router.get("/movies/:id", getMovieById);
 router.post("/movies", createMovie);
+router.post("/movies", upload.single("poster"), createMovie); // buat upload poster ke bucket storage
 router.put("/movies/:id", updateMovie);
 router.delete("/movies/:id", deleteMovie);
-
-// Endpoint untuk upload poster (gambar)
-router.post("/movies/:id/poster", upload.single("poster"), updateMoviePoster);
 
 export default router;
