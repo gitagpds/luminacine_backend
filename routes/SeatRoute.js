@@ -5,6 +5,7 @@ import {
   createSeat,
   updateSeat,
   deleteSeat,
+  getSeatStatusById,
 } from "../controllers/SeatController.js";
 
 const router = express.Router();
