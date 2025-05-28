@@ -6,7 +6,7 @@ import Seat from "../models/SeatModel.js";
 async function getSchedules(req, res) {
   try {
     const schedules = await Schedule.findAll({
-      include: [{ model: Movie }], // JOIN ke Movie
+      include: [{ model: Movie }],
     });
 
     return res.status(200).json({
@@ -49,8 +49,40 @@ async function getScheduleById(req, res) {
   }
 }
 
-// CREATE SCHEDULE + AUTO-GENERATE SEATS
+// GET SCHEDULES BY MOVIE ID
+async function getSchedulesByMovieId(req, res) {
+  try {
+    const schedules = await Schedule.findAll({
+      where: { id_movie: req.params.movieId },
+      include: [{ model: Movie }],
+    });
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Schedules for movie retrieved",
+      data: schedules,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+// CREATE SCHEDULE
 async function createSchedule(req, res) {
+  return createScheduleHandler(req, res);
+}
+
+// CREATE SCHEDULE FOR MOVIE
+async function createScheduleForMovie(req, res) {
+  req.body.id_movie = req.params.movieId;
+  return createScheduleHandler(req, res);
+}
+
+// Handler untuk membuat schedule (digunakan di 2 endpoint)
+async function createScheduleHandler(req, res) {
   try {
     const {
       id_movie,
@@ -58,40 +90,30 @@ async function createSchedule(req, res) {
       studio,
       date,
       time,
-      price
+      price,
     } = req.body;
 
-    if (
-      !id_movie ||
-      !cinema_name ||
-      !studio ||
-      !date ||
-      !time ||
-      !price
-    ) {
+    if (!id_movie || !cinema_name || !studio || !date || !time || !price) {
       const error = new Error("Field cannot be empty 😠");
       error.statusCode = 400;
       throw error;
     }
 
-    // Buat schedule baru
     const newSchedule = await Schedule.create(req.body);
 
-    // Template kursi: baris A-F, kolom 1-14
     const rows = ['A', 'B', 'C', 'D', 'E', 'F'];
     const seatsToCreate = [];
 
     for (const row of rows) {
       for (let number = 1; number <= 14; number++) {
         seatsToCreate.push({
-          id_schedule: newSchedule.id_schedule,  // relasi ke schedule baru
-          seat_code: `${row}${number}`,          // contoh: A1, A2, ..., F14
-          status: 'available'                    // misal default status kursi tersedia
+          id_schedule: newSchedule.id_schedule,
+          seat_code: '${row}${number}',
+          status: 'available',
         });
       }
     }
 
-    // Bulk insert ke tabel Seat
     await Seat.bulkCreate(seatsToCreate);
 
     return res.status(201).json({
@@ -107,9 +129,19 @@ async function createSchedule(req, res) {
   }
 }
 
-
 // UPDATE SCHEDULE
 async function updateSchedule(req, res) {
+  return updateScheduleHandler(req, res);
+}
+
+// UPDATE SCHEDULE FOR MOVIE
+async function updateScheduleForMovie(req, res) {
+  req.body.id_movie = req.params.movieId;
+  return updateScheduleHandler(req, res);
+}
+
+// Handler untuk update schedule
+async function updateScheduleHandler(req, res) {
   try {
     const {
       id_movie,
@@ -117,17 +149,10 @@ async function updateSchedule(req, res) {
       studio,
       date,
       time,
-      price
+      price,
     } = req.body;
 
-    if (
-      !id_movie ||
-      !cinema_name ||
-      !studio ||
-      !date ||
-      !time ||
-      !price
-    ) {
+    if (!id_movie || !cinema_name || !studio || !date || !time || !price) {
       const error = new Error("Field cannot be empty 😠");
       error.statusCode = 400;
       throw error;
@@ -203,7 +228,10 @@ async function deleteSchedule(req, res) {
 export {
   getSchedules,
   getScheduleById,
+  getSchedulesByMovieId,
   createSchedule,
+  createScheduleForMovie,
   updateSchedule,
+  updateScheduleForMovie,
   deleteSchedule,
 };
