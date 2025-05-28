@@ -18,6 +18,6 @@ router.put("/movies/:id", updateMovie);
 router.delete("/movies/:id", deleteMovie);
 
 // Endpoint untuk upload poster (gambar)
-router.put("/movies/:id/poster", upload.single("poster"), updateMoviePoster);
+router.post("/movies/:id/poster", upload.single("poster"), updateMoviePoster);
 
 export default router;
