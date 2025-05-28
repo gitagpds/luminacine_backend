@@ -1,4 +1,5 @@
 import Seat from "../models/SeatModel.js";
+import BookingSeat from "../models/BookingSeatModel.js";
 
 // GET all seats (optionally filter by schedule)
 async function getSeats(req, res) {
@@ -137,10 +138,43 @@ async function deleteSeat(req, res) {
   }
 }
 
+// GET seat status by seat ID
+async function getSeatStatusById(req, res) {
+  try {
+    const { id } = req.params;
+
+    const seat = await Seat.findByPk(id);
+    if (!seat) {
+      return res.status(404).json({
+        status: "Error",
+        message: "Seat tidak ditemukan 😮",
+      });
+    }
+
+    const isBooked = await BookingSeat.findOne({ where: { id_seat: id } });
+
+    return res.status(200).json({
+      status: "Success",
+      message: `Status seat ${id}`,
+      data: {
+        id_seat: id,
+        seat_code: seat.seat_code,
+        status: isBooked ? "booked" : "available",
+      },
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
 export {
   getSeats,
   getSeatsByScheduleId,
   createSeat,
   updateSeat,
   deleteSeat,
+  getSeatStatusById,
 };
