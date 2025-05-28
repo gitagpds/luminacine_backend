@@ -118,14 +118,23 @@ async function getMovieById(req, res) {
 // CREATE MOVIE
 async function createMovie(req, res) {
   try {
-    // Minimal title wajib ada
     if (!req.body.title) {
       const error = new Error("Field 'title' tidak boleh kosong 😠");
       error.statusCode = 400;
       throw error;
     }
 
-    const newMovie = await Movie.create(req.body);
+    // Upload poster jika ada
+    let posterUrl = null;
+    if (req.file) {
+      posterUrl = await uploadToGCS(req.file); // Upload ke GCS
+    }
+
+    // Tambahkan poster_url ke data body
+    const newMovie = await Movie.create({
+      ...req.body,
+      poster_url: posterUrl,
+    });
 
     return res.status(201).json({
       status: "Success",
