@@ -2,8 +2,11 @@ import express from "express";
 import {
   getSchedules,
   getScheduleById,
+  getSchedulesByMovieId,
   createSchedule,
+  createScheduleForMovie,
   updateSchedule,
+  updateScheduleForMovie,
   deleteSchedule,
 } from "../controllers/ScheduleController.js";
 
@@ -12,10 +15,11 @@ const router = express.Router();
 // Endpoint untuk CRUD schedules
 router.get("/schedules", getSchedules);
 router.get("/schedules/:id", getScheduleById);
+router.get("/movies/:movieId/schedules", getSchedulesByMovieId);
 router.post("/schedules", createSchedule);
+router.post("/movies/:movieId/schedules", createScheduleForMovie);
 router.put("/schedules/:id", updateSchedule);
+router.put("/movies/:movieId/schedules/:id", updateScheduleForMovie);
 router.delete("/schedules/:id", deleteSchedule);
-
-router.get("/schedules/movie/:id_movie", getSchedulesByMovieId); // ambil schedules berdasarkan id movie
 
 export default router;
