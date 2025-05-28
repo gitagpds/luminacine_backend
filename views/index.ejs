@@ -16,6 +16,7 @@
           <td>Deskripsi</td>
           <td>Request Body</td>
           <td>Contoh Response</td>
+          <td>Tabel Database</td>
         </tr>
       </thead>
       <tbody style="font-family: monospace">
@@ -41,6 +42,7 @@
             &nbsp; ] <br />
             }
           </td>
+          <td>User</td>
         </tr>
         <tr>
           <td>GET</td>
@@ -61,6 +63,7 @@
             &nbsp; } <br />
             }
           </td>
+          <td>User</td>
         </tr>
         <tr>
           <td>POST</td>
@@ -81,6 +84,7 @@
             &nbsp; message: "Users Created" <br />
             }
           </td>
+          <td>User</td>
         </tr>
         <tr>
           <td>PUT</td>
@@ -92,6 +96,7 @@
             &nbsp; message: "Users Updated" <br />
             }
           </td>
+          <td>User</td>
         </tr>
         <tr>
           <td>DELETE</td>
@@ -104,13 +109,36 @@
             &nbsp; message: "Users Deleted" <br />
             }
           </td>
+          <td>User</td>
+        </tr>
+        <!-- Tambahan baris lainnya nanti disesuaikan -->
+        <!-- Contoh jika kamu ingin menambah Booking -->
+        <tr>
+          <td>POST</td>
+          <td>/bookings</td>
+          <td>Menambahkan data pemesanan baru.</td>
+          <td>
+            Content-type: application/json<br />
+            { <br />
+            &nbsp; id_user: 1, <br />
+            &nbsp; id_schedule: 2, <br />
+            &nbsp; total_price: 50000 <br />
+            }
+          </td>
+          <td>
+            { <br />
+            &nbsp; status: "Success", <br />
+            &nbsp; message: "Booking Created", <br />
+            &nbsp; data: { ... } <br />
+            }
+          </td>
+          <td>Booking</td>
         </tr>
       </tbody>
     </table>
 
-    <h3 style="font-size: 16px; margin-left: 100px;">Anggota :</h3>
-    <h3 style="font-size: 16px; margin-left: 30px;">1. Laras Ayodya Sari (123220081)</h3>
-    <h3 style="font-size: 16px; margin-left: 30px;">2. Gita Poetri Dewi Siregar (123220087)</h3>
-
+    <h3 style="font-size: 16px; margin-left: 300px;">Anggota :</h3>
+    <h3 style="font-size: 16px; margin-left: 300px;">1. Laras Ayodya Sari (123220081)</h3>
+    <h3 style="font-size: 16px; margin-left: 300px;">2. Gita Poetri Dewi Siregar (123220087)</h3>
   </body>
 </html>
