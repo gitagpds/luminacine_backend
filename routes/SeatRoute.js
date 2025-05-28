@@ -19,4 +19,6 @@ router.post("/seats", createSeat);
 router.put("/seats/:id", updateSeat);
 router.delete("/seats/:id", deleteSeat);
 
+router.get("/seats/:id/status", getSeatStatusById); // mengetahui status kursi
+
 export default router;
