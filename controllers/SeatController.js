@@ -21,6 +21,26 @@ async function getSeats(req, res) {
   }
 }
 
+// GET seats by scheduleId (NEW ENDPOINT)
+async function getSeatsByScheduleId(req, res) {
+  try {
+    const { scheduleId } = req.params;
+
+    const seats = await Seat.findAll({ where: { id_schedule: scheduleId } });
+
+    return res.status(200).json({
+      status: "Success",
+      message: `Seats for schedule ${scheduleId} retrieved`,
+      data: seats,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
 // CREATE seat
 async function createSeat(req, res) {
   try {
@@ -117,4 +137,10 @@ async function deleteSeat(req, res) {
   }
 }
 
-export { getSeats, createSeat, updateSeat, deleteSeat };
+export {
+  getSeats,
+  getSeatsByScheduleId,
+  createSeat,
+  updateSeat,
+  deleteSeat,
+};
