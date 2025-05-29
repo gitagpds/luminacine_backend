@@ -225,6 +225,20 @@ async function deleteSchedule(req, res) {
   }
 }
 
+async function getScheduleForMovieById(req, res) {
+  const { movieId, id } = req.params;
+  const schedule = await Schedule.findOne({
+    where: { id_schedule: id, id_movie: movieId },
+    include: [Movie, Seat]
+  });
+
+  if (!schedule) {
+    return res.status(404).json({ message: "Schedule not found" });
+  }
+
+  return res.json(schedule);
+}
+
 export {
   getSchedules,
   getScheduleById,
@@ -234,4 +248,5 @@ export {
   updateSchedule,
   updateScheduleForMovie,
   deleteSchedule,
+  getScheduleForMovieById,
 };
