@@ -8,6 +8,7 @@ import {
   updateSchedule,
   updateScheduleForMovie,
   deleteSchedule,
+  getScheduleForMovieById,
 } from "../controllers/ScheduleController.js";
 
 const router = express.Router();
@@ -16,6 +17,7 @@ const router = express.Router();
 router.get("/schedules", getSchedules);
 router.get("/schedules/:id", getScheduleById);
 router.get("/movies/:movieId/schedules", getSchedulesByMovieId);
+router.get("/movies/:movieId/schedules/:id", getScheduleForMovieById);
 router.post("/schedules", createSchedule);
 router.post("/movies/:movieId/schedules", createScheduleForMovie);
 router.put("/schedules/:id", updateSchedule);
