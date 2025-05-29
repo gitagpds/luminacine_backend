@@ -1,10 +1,31 @@
 import Booking from "../models/BookingModel.js";
 import Seat from "../models/SeatModel.js";
+import Schedule from "../models/ScheduleModel.js";
+import Movie from "../models/MovieModel.js";
+import User from "../models/UserModel.js";
 
 // GET ALL BOOKINGS
 async function getBookings(req, res) {
   try {
-    const bookings = await Booking.findAll();
+    const bookings = await Booking.findAll({
+      include: [
+        {
+          model: Seat,
+          through: {
+            attributes: ['createdAt', 'updatedAt', 'id_booking', 'id_seat'],
+          },
+        },
+        {
+          model: Schedule,
+          include: [Movie],
+        },
+        {
+          model: User,
+          attributes: ['id_user', 'name', 'email'],
+        },
+      ],
+    });
+
     return res.status(200).json({
       status: "Success",
       message: "Bookings Retrieved",
