@@ -163,10 +163,80 @@ async function deleteBooking(req, res) {
   }
 }
 
+// ✅ GET BOOKING DETAIL (lengkap) BY ID BOOKING
+async function getBookingDetailById(req, res) {
+  try {
+    const booking = await Booking.findOne({
+      where: { id_booking: req.params.id },
+      include: [
+        {
+          model: Schedule,
+          include: [Movie],
+        },
+        {
+          model: Seat,
+        },
+        {
+          model: User,
+          attributes: ['id_user', 'name', 'email'], // Sesuaikan jika ada kolom lainnya
+        },
+      ],
+    });
+
+    if (!booking) {
+      const error = new Error("Booking tidak ditemukan 😮");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Booking Detail Retrieved",
+      data: booking,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+// ✅ GET ALL BOOKINGS BY ID USER
+async function getBookingsByUserId(req, res) {
+  try {
+    const bookings = await Booking.findAll({
+      where: { id_user: req.params.id_user },
+      include: [
+        {
+          model: Schedule,
+          include: [Movie],
+        },
+        {
+          model: Seat,
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Bookings by User Retrieved",
+      data: bookings,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
 export {
   getBookings,
   getBookingById,
   createBooking,
   updateBooking,
   deleteBooking,
+  getBookingDetailById,
+  getBookingsByUserId,
 };
