@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/schedules", getSchedules);
 router.get("/schedules/:id", getScheduleById);
 router.get("/movies/:movieId/schedules", getSchedulesByMovieId);
-router.get("/movies/:movieId/schedules/:id", getScheduleForMovieById);
+router.get("/movies/:movieId/schedules/:id", getScheduleForMovieById); // baru bangettttss
 router.post("/schedules", createSchedule);
 router.post("/movies/:movieId/schedules", createScheduleForMovie);
 router.put("/schedules/:id", updateSchedule);
