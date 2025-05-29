@@ -108,7 +108,7 @@ async function createScheduleHandler(req, res) {
       for (let number = 1; number <= 14; number++) {
         seatsToCreate.push({
           id_schedule: newSchedule.id_schedule,
-          seat_code: '${row}${number}',
+          seat_code: `${row}${number}`,
           status: 'available',
         });
       }
