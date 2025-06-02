@@ -11,18 +11,23 @@ import ScheduleRoute from "./routes/ScheduleRoute.js";
 import SeatRoute from "./routes/SeatRoute.js";
 
 const app = express();
-
 app.set("view engine", "ejs");
-
 app.use(cookieParser());
+
+// CORS Configuration - UBAH BAGIAN INI
 app.use(
   cors({
-    origin: "http://localhost:3000", // <- ganti sesuai alamat front-end kamu
+    origin: [
+      "http://localhost:3000",                           // untuk development
+      "https://g-07-450802.uc.r.appspot.com"           // untuk production
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
   })
 );
-app.use(express.json());
 
+app.use(express.json());
 app.get("/", (req, res) => res.render("index"));
 
 // Routes
