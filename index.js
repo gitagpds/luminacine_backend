@@ -38,7 +38,4 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server connected on port ${PORT}`);
-});
+const PORT = process.env.PORT;
