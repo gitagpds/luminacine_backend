@@ -3,7 +3,6 @@ import Seat from "../models/SeatModel.js";
 import Schedule from "../models/ScheduleModel.js";
 import Movie from "../models/MovieModel.js";
 import User from "../models/UserModel.js";
-import BookingSeats from "../models/BookingSeatsModel.js";
 
 // GET ALL BOOKINGS
 async function getBookings(req, res) {
