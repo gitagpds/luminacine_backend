@@ -20,17 +20,18 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000", // saat develop frontend secara lokal
-      "https://g-07-450802.uc.r.appspot.com", // frontend deploy
+      "http://localhost:3000", // frontend local
+      "https://g-07-450802.uc.r.appspot.com", // frontend deployed
     ],
     credentials: true,
   })
 );
 app.use(express.json());
 
+// Home route
 app.get("/", (req, res) => res.render("index"));
 
-// Routes
+// API routes
 app.use(UserRoute);
 app.use(BookingRoute);
 app.use(BookingSeatRoute);
@@ -38,6 +39,9 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server connected on port ${process.env.PORT}`);
+// Gunakan PORT dari environment variable (Cloud Run mengatur ini otomatis)
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
