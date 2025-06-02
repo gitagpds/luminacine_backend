@@ -3,7 +3,7 @@ import Seat from "../models/SeatModel.js";
 import Schedule from "../models/ScheduleModel.js";
 import Movie from "../models/MovieModel.js";
 import User from "../models/UserModel.js";
-import BookingSeats from "../models/BookingSeatModel.js"; // Tambahan penting
+import BookingSeat from "../models/BookingSeatModel.js"; // Tambahan penting
 
 // GET ALL BOOKINGS
 export async function getBookings(req, res) {
