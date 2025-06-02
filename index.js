@@ -39,3 +39,6 @@ app.use(ScheduleRoute);
 app.use(SeatRoute);
 
 const PORT = process.env.PORT;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server connected on port ${PORT}`);
+});
