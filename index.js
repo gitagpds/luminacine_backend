@@ -19,7 +19,10 @@ app.set("view engine", "ejs");
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://g-07-450802.uc.r.appspot.com/", // <- ganti sesuai alamat front-end kamu
+    origin: [
+      "http://localhost:3000", // saat develop frontend secara lokal
+      "https://g-07-450802.uc.r.appspot.com", // frontend deploy
+    ],
     credentials: true,
   })
 );
