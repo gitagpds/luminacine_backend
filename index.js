@@ -39,6 +39,8 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
+const app = require("./src/app.js");
+
 // Gunakan PORT dari environment variable (Cloud Run mengatur ini otomatis)
 const PORT = process.env.PORT || 5000;
 
