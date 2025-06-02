@@ -125,7 +125,7 @@ async function createMovie(req, res) {
     }
 
     // Upload poster jika ada
-    let posterUrl = null;
+    let posterUrl = req.body.poster_url || null;
     if (req.file) {
       posterUrl = await uploadToGCS(req.file); // Upload ke GCS
     }
