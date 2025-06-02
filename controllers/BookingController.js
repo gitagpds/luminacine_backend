@@ -3,7 +3,7 @@ import Seat from "../models/SeatModel.js";
 import Schedule from "../models/ScheduleModel.js";
 import Movie from "../models/MovieModel.js";
 import User from "../models/UserModel.js";
-//import BookingSeat from "../models/BookingSeatModel.js"; // Tambahan penting
+import BookingSeat from "../models/BookingSeatModel.js"; // Tambahan penting
 
 // GET ALL BOOKINGS
 export async function getBookings(req, res) {
@@ -147,13 +147,13 @@ export async function updateBooking(req, res) {
     }
 
     // Delete old seat relations
-    await BookingSeats.destroy({
+    await BookingSeat.destroy({
       where: { id_booking: req.params.id },
     });
 
     // Insert new seat relations
     for (const seatId of seats) {
-      await BookingSeats.create({
+      await BookingSeat.create({
         id_booking: req.params.id,
         id_seat: seatId,
       });
