@@ -47,8 +47,8 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-const PORT = process.env.PORT;  // Hanya pakai env var PORT saja
-
+console.log("PORT:", process.env.PORT);
+const PORT = process.env.PORT || 8080;  // fallback kalau PORT kosong
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
