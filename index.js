@@ -16,46 +16,24 @@ app.set("view engine", "ejs");
 
 // Daftar origin yang diizinkan (dev dan production)
 const allowedOrigins = [
+  "http://localhost:3000",
   "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
-  "http://localhost:3000"
 ];
-
-/*
-// Middleware manual untuk CORS dan preflight (OPTIONS)
-// Sudah tidak digunakan, digantikan dengan middleware cors() yang lebih baik
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204); // untuk preflight
-  }
-
-  next();
-});
-*/
 
 // Middleware CORS yang direkomendasikan
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow requests with no origin (like curl)
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      return callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
