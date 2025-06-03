@@ -14,14 +14,15 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-// CORS Configuration - UBAH BAGIAN INI
+// ✅ CORS Configuration (sudah diperbaiki)
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://luminacine-dot-g-07-450802.uc.r.appspot.com"
+];
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowedOrigins = [
-        "http://localhost:3000",
-        "https://g-07-450802.uc.r.appspot.com"
-      ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -29,8 +30,8 @@ app.use(
       }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"]
   })
 );
 
@@ -45,7 +46,7 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-const PORT = process.env.PORT;
-app.listen(PORT, '0.0.0.0', () => {
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server connected on port ${PORT}`);
 });
