@@ -5,7 +5,7 @@ import Movie from "../models/MovieModel.js";
 import User from "../models/UserModel.js";
 
 // GET ALL BOOKINGS
-export async function getBookings(req, res) {
+async function getBookings(req, res) {
   try {
     const bookings = await Booking.findAll({
       include: [
@@ -40,20 +40,13 @@ export async function getBookings(req, res) {
 }
 
 // GET BOOKING BY ID
-export async function getBookingById(req, res) {
+async function getBookingById(req, res) {
   try {
     const booking = await Booking.findOne({
       where: { id_booking: req.params.id },
       include: [
-        { model: Seat },
-        {
-          model: Schedule,
-          include: [Movie],
-        },
-        {
-          model: User,
-          attributes: ['id_user', 'name', 'email'],
-        },
+        { model: Seat },        // Include seats yang dipesan
+        { model: Schedule },    // Optional: include schedule info
       ],
     });
 
@@ -77,7 +70,7 @@ export async function getBookingById(req, res) {
 }
 
 // CREATE BOOKING
-export async function createBooking(req, res) {
+async function createBooking(req, res) {
   try {
     const { id_user, id_schedule, seats, total_price } = req.body;
 
@@ -87,16 +80,17 @@ export async function createBooking(req, res) {
       throw error;
     }
 
+    // Buat booking
     const newBooking = await Booking.create({ id_user, id_schedule, total_price });
+
+    // Tambahkan relasi booking_seats
+    // seats diharapkan array berisi id_seat, contoh: [1, 2, 3]
     await newBooking.setSeats(seats);
 
+    // Ambil ulang booking dengan seat untuk response
     const bookingWithSeats = await Booking.findOne({
       where: { id_booking: newBooking.id_booking },
-      include: [
-        { model: Seat },
-        { model: Schedule, include: [Movie] },
-        { model: User, attributes: ['id_user', 'name', 'email'] }
-      ],
+      include: [Seat],
     });
 
     return res.status(201).json({
@@ -113,12 +107,12 @@ export async function createBooking(req, res) {
 }
 
 // UPDATE BOOKING
-export async function updateBooking(req, res) {
+async function updateBooking(req, res) {
   try {
     const { id_user, id_schedule, seats, total_price } = req.body;
 
-    if (!id_user || !id_schedule || !seats || seats.length === 0 || !total_price) {
-      const error = new Error("Field cannot be empty and seats cannot be empty 😠");
+    if (!id_user || !id_schedule || !seats || !total_price) {
+      const error = new Error("Field cannot be empty 😠");
       error.statusCode = 400;
       throw error;
     }
@@ -133,7 +127,7 @@ export async function updateBooking(req, res) {
       throw error;
     }
 
-    // Update main booking data
+    // Update data booking utama
     const result = await Booking.update(
       { id_user, id_schedule, total_price },
       { where: { id_booking: req.params.id } }
@@ -145,33 +139,22 @@ export async function updateBooking(req, res) {
       throw error;
     }
 
-    // Delete old seat relations
-    await BookingSeat.destroy({
+    // Hapus relasi booking_seats lama
+    await BookingSeats.destroy({
       where: { id_booking: req.params.id },
     });
 
-    // Insert new seat relations
+    // Insert relasi booking_seats baru sesuai seats baru
     for (const seatId of seats) {
-      await BookingSeat.create({
+      await BookingSeats.create({
         id_booking: req.params.id,
         id_seat: seatId,
       });
     }
 
-    // Return updated booking
-    const updatedBooking = await Booking.findOne({
-      where: { id_booking: req.params.id },
-      include: [
-        { model: Seat },
-        { model: Schedule, include: [Movie] },
-        { model: User, attributes: ['id_user', 'name', 'email'] }
-      ],
-    });
-
     return res.status(200).json({
       status: "Success",
       message: "Booking Updated",
-      data: updatedBooking,
     });
   } catch (error) {
     return res.status(error.statusCode || 500).json({
@@ -180,3 +163,116 @@ export async function updateBooking(req, res) {
     });
   }
 }
+
+// DELETE BOOKING
+async function deleteBooking(req, res) {
+  try {
+    const bookingExist = await Booking.findOne({
+      where: { id_booking: req.params.id },
+    });
+
+    if (!bookingExist) {
+      const error = new Error("Booking tidak ditemukan 😮");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const result = await Booking.destroy({
+      where: { id_booking: req.params.id },
+    });
+
+    if (result === 0) {
+      const error = new Error("Tidak ada data yang berubah");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Booking Deleted",
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+// ✅ GET BOOKING DETAIL (lengkap) BY ID BOOKING
+async function getBookingDetailById(req, res) {
+  try {
+    const booking = await Booking.findOne({
+      where: { id_booking: req.params.id },
+      include: [
+        {
+          model: Schedule,
+          include: [Movie],
+        },
+        {
+          model: Seat,
+        },
+        {
+          model: User,
+          attributes: ['id_user', 'name', 'email'], // Sesuaikan jika ada kolom lainnya
+        },
+      ],
+    });
+
+    if (!booking) {
+      const error = new Error("Booking tidak ditemukan 😮");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Booking Detail Retrieved",
+      data: booking,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+// ✅ GET ALL BOOKINGS BY ID USER
+async function getBookingsByUserId(req, res) {
+  try {
+    const bookings = await Booking.findAll({
+      where: { id_user: req.params.id_user },
+      include: [
+        {
+          model: Schedule,
+          include: [Movie],
+        },
+        {
+          model: Seat,
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Bookings by User Retrieved",
+      data: bookings,
+    });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+}
+
+export {
+  getBookings,
+  getBookingById,
+  createBooking,
+  updateBooking,
+  deleteBooking,
+  getBookingDetailById,
+  getBookingsByUserId,
+};
