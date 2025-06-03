@@ -16,8 +16,7 @@ app.set("view engine", "ejs");
 
 // Daftar origin yang diizinkan (dev dan production)
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
+  "https://luminacine-dot-g-07-450802.uc.r.appspot.com"
 ];
 
 // Middleware CORS yang direkomendasikan
