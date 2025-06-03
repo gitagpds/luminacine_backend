@@ -20,7 +20,7 @@ steps:
         "--timeout",
         "1000s",
         "--port",
-        "5000",
+        "8080", // INI KU UBAHHHH
         "--region",
         "us-central1",
         "--allow-unauthenticated",
