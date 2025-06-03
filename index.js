@@ -13,8 +13,6 @@ import ScheduleRoute from "./routes/ScheduleRoute.js";
 import SeatRoute from "./routes/SeatRoute.js";
 
 const app = express();
-const port = process.env.PORT || 5000;
-
 app.use(cookieParser());
 
 const allowedOrigins = [
@@ -46,5 +44,7 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-console.log("ENV PORT:", process.env.PORT); // Tambahan untuk debugging di Cloud Run
-app.listen(port, () => console.log(`Server connected on port ${port}`));
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
