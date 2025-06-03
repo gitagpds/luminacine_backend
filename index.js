@@ -36,6 +36,7 @@ app.use(
 );
 
 app.use(express.json());
+
 app.get("/", (req, res) => res.render("index"));
 
 // Routes
@@ -46,7 +47,8 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;  // Hanya pakai env var PORT saja
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
