@@ -13,7 +13,7 @@ import ScheduleRoute from "./routes/ScheduleRoute.js";
 import SeatRoute from "./routes/SeatRoute.js";
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(cookieParser());
 
