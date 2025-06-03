@@ -46,4 +46,5 @@ app.use(MovieRoute);
 app.use(ScheduleRoute);
 app.use(SeatRoute);
 
+console.log("ENV PORT:", process.env.PORT); // Tambahan untuk debugging di Cloud Run
 app.listen(port, () => console.log(`Server connected on port ${port}`));
