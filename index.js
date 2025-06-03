@@ -16,16 +16,26 @@ const app = express();
 const port = 5000;
 
 app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:8080",
+  "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:8080",
-      "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
-    ], // <- Diganti sama alamat front-end
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 // Routes
