@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Dokumentasi API Luminacine</title>
   </head>
   <body>
     <h3 style="font-size: 24px; text-align: center;">FINAL PROJECT PRAKTIKUM TEKNOLOGI CLOUD COMPUTING</h3>
@@ -20,125 +20,260 @@
         </tr>
       </thead>
       <tbody style="font-family: monospace">
+        <!-- === USER === -->
         <tr>
           <td>GET</td>
           <td>/users</td>
           <td>Mengambil seluruh data dari tabel users.</td>
           <td>-</td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Users Retrieved", <br />
-            &nbsp; data: [ <br />
-            &nbsp;&nbsp; { <br />
-            &nbsp;&nbsp;&nbsp; "id": 1, <br />
-            &nbsp;&nbsp;&nbsp; "name": "rafli", <br />
-            &nbsp;&nbsp;&nbsp; "email": "rafli@gmail.com", <br />
-            &nbsp;&nbsp;&nbsp; "gender": "Male", <br />
-            &nbsp;&nbsp;&nbsp; "createdAt": "2025-04-29T13:17:17.000Z", <br />
-            &nbsp;&nbsp;&nbsp; "updatedAt": "2025-04-29T13:17:17.000Z" <br />
-            &nbsp;&nbsp; }, <br />
-            &nbsp;&nbsp; ... <br />
-            &nbsp; ] <br />
-            }
-          </td>
+          <td>{ status: "Success", message: "Users Retrieved", data: [...] }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>GET</td>
           <td>/users/:id</td>
-          <td>Mengambil data dari tabel users berdasarkan id.</td>
+          <td>Mengambil data user berdasarkan id.</td>
           <td>-</td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Users Retrieved", <br />
-            &nbsp; data: { <br />
-            &nbsp;&nbsp; "id": 1, <br />
-            &nbsp;&nbsp; "name": "rafli", <br />
-            &nbsp;&nbsp; "email": "rafli@gmail.com", <br />
-            &nbsp;&nbsp; "gender": "Male", <br />
-            &nbsp;&nbsp; "createdAt": "2025-04-29T13:17:17.000Z", <br />
-            &nbsp;&nbsp; "updatedAt": "2025-04-29T13:17:17.000Z" <br />
-            &nbsp; } <br />
-            }
-          </td>
+          <td>{ status: "Success", message: "User Retrieved", data: {...} }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>POST</td>
           <td>/users</td>
-          <td>Menambahkan data baru ke tabel users.</td>
-          <td rowspan="2">
-            Content-type: application/json<br />
-            Contoh isi request body: <br />
-            { <br />
-            &nbsp; name: "awgnc" <br />
-            &nbsp; email: "awg@awg.inc" <br />
-            &nbsp; gender: "l" <br />
-            }
-          </td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Users Created" <br />
-            }
-          </td>
+          <td>Menambahkan user baru.</td>
+          <td>{ name, email, password }</td>
+          <td>{ status: "Success", message: "User Registered", data: {...} }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>PUT</td>
           <td>/users/:id</td>
-          <td>Mengubah data dari tabel users berdasarkan id.</td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Users Updated" <br />
-            }
-          </td>
+          <td>Update user berdasarkan id.</td>
+          <td>{ name, email, password }</td>
+          <td>{ status: "Success", message: "User Updated" }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>DELETE</td>
           <td>/users/:id</td>
-          <td>Menghapus data dari tabel users berdasarkan id.</td>
+          <td>Menghapus user berdasarkan id.</td>
           <td>-</td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Users Deleted" <br />
-            }
-          </td>
+          <td>{ status: "Success", message: "User Deleted" }</td>
           <td>User</td>
         </tr>
-        <!-- Tambahan baris lainnya nanti disesuaikan -->
-        <!-- Contoh jika kamu ingin menambah Booking -->
+
+        <!-- === AUTH & TOKEN === -->
+        <tr>
+          <td>POST</td>
+          <td>/login</td>
+          <td>Login dan dapatkan token.</td>
+          <td>{ email, password }</td>
+          <td>{ status: "Success", message: "Login Success", accessToken: "..." }</td>
+          <td>User</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>/logout</td>
+          <td>Logout dan hapus refresh token.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Logout Berhasil" }</td>
+          <td>User</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/token</td>
+          <td>Generate access token dari refresh token.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Berhasil mendapatkan access token.", accessToken: "..." }</td>
+          <td>User</td>
+        </tr>
+
+        <!-- === MOVIE === -->
+        <tr>
+          <td>GET</td>
+          <td>/movies</td>
+          <td>Menampilkan semua movie.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Movies Retrieved", data: [...] }</td>
+          <td>Movie</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/movies/:id</td>
+          <td>Menampilkan detail movie.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Movie Retrieved", data: {...} }</td>
+          <td>Movie</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/movies</td>
+          <td>Menambahkan movie baru.</td>
+          <td>Form-data: title, sinopsis, poster (opsional)</td>
+          <td>{ status: "Success", message: "Movie Created", data: {...} }</td>
+          <td>Movie</td>
+        </tr>
+        <tr>
+          <td>PUT</td>
+          <td>/movies/:id</td>
+          <td>Mengubah data movie.</td>
+          <td>{ title, sinopsis, ... }</td>
+          <td>{ status: "Success", message: "Movie Updated" }</td>
+          <td>Movie</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>/movies/:id</td>
+          <td>Menghapus movie.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Movie Deleted" }</td>
+          <td>Movie</td>
+        </tr>
+
+        <!-- === SCHEDULE === -->
+        <tr>
+          <td>GET</td>
+          <td>/schedules</td>
+          <td>Ambil semua jadwal film.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Schedules Retrieved", data: [...] }</td>
+          <td>Schedule</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/schedules/:id</td>
+          <td>Ambil jadwal berdasarkan ID.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Schedule Retrieved", data: {...} }</td>
+          <td>Schedule</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/schedules</td>
+          <td>Tambah jadwal baru.</td>
+          <td>{ id_movie, cinema_name, date, time, price }</td>
+          <td>{ status: "Success", message: "Schedule Created with seats generated" }</td>
+          <td>Schedule, Seat</td>
+        </tr>
+        <tr>
+          <td>PUT</td>
+          <td>/schedules/:id</td>
+          <td>Update jadwal.</td>
+          <td>{ ... }</td>
+          <td>{ status: "Success", message: "Schedule Updated" }</td>
+          <td>Schedule</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>/schedules/:id</td>
+          <td>Hapus jadwal.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Schedule Deleted" }</td>
+          <td>Schedule</td>
+        </tr>
+
+        <!-- === SEAT === -->
+        <tr>
+          <td>GET</td>
+          <td>/seats</td>
+          <td>Ambil semua seat (opsional query scheduleId).</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>Seat</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/seats/schedule/:scheduleId</td>
+          <td>Ambil semua seat berdasarkan schedule.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>Seat</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/seats/:id/status</td>
+          <td>Status dari satu kursi.</td>
+          <td>-</td>
+          <td>{ status: "Success", data: { status: "booked" } }</td>
+          <td>Seat</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/seats/schedule/:scheduleId/status</td>
+          <td>Status semua seat dari schedule.</td>
+          <td>-</td>
+          <td>{ status: "Success", data: [ { seat_code, status } ] }</td>
+          <td>Seat</td>
+        </tr>
+
+        <!-- === BOOKING === -->
+        <tr>
+          <td>GET</td>
+          <td>/bookings</td>
+          <td>Ambil semua data booking.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>Booking</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/bookings/:id</td>
+          <td>Ambil booking berdasarkan ID.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "...", data: {...} }</td>
+          <td>Booking</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/booking-detail/:id</td>
+          <td>Detail lengkap booking.</td>
+          <td>-</td>
+          <td>{ status: "Success", data: {...} }</td>
+          <td>Booking</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/bookings/user/:id_user</td>
+          <td>Booking dari user tertentu.</td>
+          <td>-</td>
+          <td>{ status: "Success", data: [...] }</td>
+          <td>Booking</td>
+        </tr>
         <tr>
           <td>POST</td>
           <td>/bookings</td>
-          <td>Menambahkan data pemesanan baru.</td>
-          <td>
-            Content-type: application/json<br />
-            { <br />
-            &nbsp; id_user: 1, <br />
-            &nbsp; id_schedule: 2, <br />
-            &nbsp; total_price: 50000 <br />
-            }
-          </td>
-          <td>
-            { <br />
-            &nbsp; status: "Success", <br />
-            &nbsp; message: "Booking Created", <br />
-            &nbsp; data: { ... } <br />
-            }
-          </td>
+          <td>Buat booking baru.</td>
+          <td>{ id_user, id_schedule, total_price, seats: [1,2,3] }</td>
+          <td>{ status: "Success", message: "Booking Created", data: {...} }</td>
+          <td>Booking, BookingSeat</td>
+        </tr>
+        <tr>
+          <td>PUT</td>
+          <td>/bookings/:id</td>
+          <td>Update booking.</td>
+          <td>{ id_user, id_schedule, total_price, seats }</td>
+          <td>{ status: "Success", message: "Booking Updated" }</td>
           <td>Booking</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>/bookings/:id</td>
+          <td>Hapus booking.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "Booking Deleted" }</td>
+          <td>Booking</td>
+        </tr>
+
+        <!-- === BOOKING_SEAT === -->
+        <tr>
+          <td>GET</td>
+          <td>/booking_seats</td>
+          <td>Ambil semua data relasi booking_seat.</td>
+          <td>-</td>
+          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>BookingSeat</td>
         </tr>
       </tbody>
     </table>
-
-    <h3 style="font-size: 16px; margin-left: 300px;">Anggota :</h3>
-    <h3 style="font-size: 16px; margin-left: 300px;">1. Laras Ayodya Sari (123220081)</h3>
-    <h3 style="font-size: 16px; margin-left: 300px;">2. Gita Poetri Dewi Siregar (123220087)</h3>
   </body>
 </html>
