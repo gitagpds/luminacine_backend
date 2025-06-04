@@ -26,7 +26,7 @@
           <td>/users</td>
           <td>Mengambil seluruh data dari tabel users.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Users Retrieved", data: [...] }</td>
+          <td>{ status: "Success", message: "Users Retrieved", data: [{ id_user: 1, name: "John Doe", email: "john@example.com", role: "user" }] }</td>
           <td>User</td>
         </tr>
         <tr>
@@ -34,22 +34,22 @@
           <td>/users/:id</td>
           <td>Mengambil data user berdasarkan id.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "User Retrieved", data: {...} }</td>
+          <td>{ status: "Success", message: "User Retrieved", data: { id_user: 1, name: "John Doe", email: "john@example.com", role: "user" } }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>POST</td>
           <td>/users</td>
           <td>Menambahkan user baru.</td>
-          <td>{ name, email, password }</td>
-          <td>{ status: "Success", message: "User Registered", data: {...} }</td>
+          <td>{ name: "Jane", email: "jane@example.com", password: "12345" }</td>
+          <td>{ status: "Success", message: "User Registered", data: { id_user: 2, name: "Jane", email: "jane@example.com", role: "user" } }</td>
           <td>User</td>
         </tr>
         <tr>
           <td>PUT</td>
           <td>/users/:id</td>
           <td>Update user berdasarkan id.</td>
-          <td>{ name, email, password }</td>
+          <td>{ name: "Jane Updated", password: "67890" }</td>
           <td>{ status: "Success", message: "User Updated" }</td>
           <td>User</td>
         </tr>
@@ -67,8 +67,8 @@
           <td>POST</td>
           <td>/login</td>
           <td>Login dan dapatkan token.</td>
-          <td>{ email, password }</td>
-          <td>{ status: "Success", message: "Login Success", accessToken: "..." }</td>
+          <td>{ email: "john@example.com", password: "12345" }</td>
+          <td>{ status: "Success", message: "Login Success", accessToken: "JWT_TOKEN" }</td>
           <td>User</td>
         </tr>
         <tr>
@@ -84,47 +84,46 @@
           <td>/token</td>
           <td>Generate access token dari refresh token.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Berhasil mendapatkan access token.", accessToken: "..." }</td>
+          <td>{ status: "Success", message: "Berhasil mendapatkan access token.", accessToken: "JWT_TOKEN" }</td>
           <td>User</td>
         </tr>
-
-        <!-- === MOVIE === -->
+<!-- === MOVIE === -->
         <tr>
           <td>GET</td>
           <td>/movies</td>
-          <td>Menampilkan semua movie.</td>
+          <td>Mengambil seluruh daftar movie.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Movies Retrieved", data: [...] }</td>
+          <td>{ status: "Success", message: "Movies Retrieved", data: [{ id_movie: 1, title: "Avengers", genre: "Action" }] }</td>
           <td>Movie</td>
         </tr>
         <tr>
           <td>GET</td>
           <td>/movies/:id</td>
-          <td>Menampilkan detail movie.</td>
+          <td>Mengambil satu movie berdasarkan ID.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Movie Retrieved", data: {...} }</td>
+          <td>{ status: "Success", message: "Movie Retrieved", data: { id_movie: 1, title: "Avengers" } }</td>
           <td>Movie</td>
         </tr>
         <tr>
           <td>POST</td>
           <td>/movies</td>
           <td>Menambahkan movie baru.</td>
-          <td>Form-data: title, sinopsis, poster (opsional)</td>
-          <td>{ status: "Success", message: "Movie Created", data: {...} }</td>
+          <td>Form-data: title, sinopsis, genre, poster_url, release_date</td>
+          <td>{ status: "Success", message: "Movie Created", data: { id_movie: 3, title: "Barbie" } }</td>
           <td>Movie</td>
         </tr>
         <tr>
           <td>PUT</td>
           <td>/movies/:id</td>
-          <td>Mengubah data movie.</td>
-          <td>{ title, sinopsis, ... }</td>
+          <td>Update movie berdasarkan ID.</td>
+          <td>{ title: "Barbie 2" }</td>
           <td>{ status: "Success", message: "Movie Updated" }</td>
           <td>Movie</td>
         </tr>
         <tr>
           <td>DELETE</td>
           <td>/movies/:id</td>
-          <td>Menghapus movie.</td>
+          <td>Menghapus movie berdasarkan ID.</td>
           <td>-</td>
           <td>{ status: "Success", message: "Movie Deleted" }</td>
           <td>Movie</td>
@@ -134,39 +133,39 @@
         <tr>
           <td>GET</td>
           <td>/schedules</td>
-          <td>Ambil semua jadwal film.</td>
+          <td>Mengambil semua jadwal film.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Schedules Retrieved", data: [...] }</td>
+          <td>{ status: "Success", message: "Schedules Retrieved", data: [{ id_schedule: 1, cinema_name: "XXI" }] }</td>
           <td>Schedule</td>
         </tr>
         <tr>
           <td>GET</td>
           <td>/schedules/:id</td>
-          <td>Ambil jadwal berdasarkan ID.</td>
+          <td>Mengambil detail schedule berdasarkan ID.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Schedule Retrieved", data: {...} }</td>
+          <td>{ status: "Success", message: "Schedule Retrieved", data: { id_schedule: 1, studio: "Studio 1" } }</td>
           <td>Schedule</td>
         </tr>
         <tr>
           <td>POST</td>
           <td>/schedules</td>
-          <td>Tambah jadwal baru.</td>
-          <td>{ id_movie, cinema_name, date, time, price }</td>
+          <td>Menambahkan jadwal baru.</td>
+          <td>{ id_movie: 1, cinema_name: "XXI", studio: "1", date: "2025-06-10", time: "19:00", price: 50000 }</td>
           <td>{ status: "Success", message: "Schedule Created with seats generated" }</td>
-          <td>Schedule, Seat</td>
+          <td>Schedule</td>
         </tr>
         <tr>
           <td>PUT</td>
           <td>/schedules/:id</td>
-          <td>Update jadwal.</td>
-          <td>{ ... }</td>
+          <td>Update jadwal berdasarkan ID.</td>
+          <td>{ cinema_name: "XXI Updated" }</td>
           <td>{ status: "Success", message: "Schedule Updated" }</td>
           <td>Schedule</td>
         </tr>
         <tr>
           <td>DELETE</td>
           <td>/schedules/:id</td>
-          <td>Hapus jadwal.</td>
+          <td>Menghapus schedule berdasarkan ID.</td>
           <td>-</td>
           <td>{ status: "Success", message: "Schedule Deleted" }</td>
           <td>Schedule</td>
@@ -175,102 +174,54 @@
         <!-- === SEAT === -->
         <tr>
           <td>GET</td>
-          <td>/seats</td>
-          <td>Ambil semua seat (opsional query scheduleId).</td>
-          <td>-</td>
-          <td>{ status: "Success", message: "...", data: [...] }</td>
-          <td>Seat</td>
-        </tr>
-        <tr>
-          <td>GET</td>
           <td>/seats/schedule/:scheduleId</td>
-          <td>Ambil semua seat berdasarkan schedule.</td>
+          <td>Ambil semua seat dari jadwal tertentu.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>{ status: "Success", message: "Seats for schedule 1 retrieved", data: [{ id_seat: 1, seat_code: "A1" }] }</td>
           <td>Seat</td>
         </tr>
         <tr>
           <td>GET</td>
           <td>/seats/:id/status</td>
-          <td>Status dari satu kursi.</td>
+          <td>Menampilkan status kursi tertentu.</td>
           <td>-</td>
-          <td>{ status: "Success", data: { status: "booked" } }</td>
-          <td>Seat</td>
-        </tr>
-        <tr>
-          <td>GET</td>
-          <td>/seats/schedule/:scheduleId/status</td>
-          <td>Status semua seat dari schedule.</td>
-          <td>-</td>
-          <td>{ status: "Success", data: [ { seat_code, status } ] }</td>
+          <td>{ status: "Success", message: "Status seat 1", data: { status: "available" } }</td>
           <td>Seat</td>
         </tr>
 
         <!-- === BOOKING === -->
         <tr>
-          <td>GET</td>
+          <td>POST</td>
           <td>/bookings</td>
-          <td>Ambil semua data booking.</td>
-          <td>-</td>
-          <td>{ status: "Success", message: "...", data: [...] }</td>
-          <td>Booking</td>
-        </tr>
-        <tr>
-          <td>GET</td>
-          <td>/bookings/:id</td>
-          <td>Ambil booking berdasarkan ID.</td>
-          <td>-</td>
-          <td>{ status: "Success", message: "...", data: {...} }</td>
-          <td>Booking</td>
-        </tr>
-        <tr>
-          <td>GET</td>
-          <td>/booking-detail/:id</td>
-          <td>Detail lengkap booking.</td>
-          <td>-</td>
-          <td>{ status: "Success", data: {...} }</td>
+          <td>Menambahkan data pemesanan baru.</td>
+          <td>{ id_user: 1, id_schedule: 2, total_price: 100000, seats: [1, 2] }</td>
+          <td>{ status: "Success", message: "Booking Created", data: { id_booking: 10 } }</td>
           <td>Booking</td>
         </tr>
         <tr>
           <td>GET</td>
           <td>/bookings/user/:id_user</td>
-          <td>Booking dari user tertentu.</td>
+          <td>Menampilkan semua booking berdasarkan ID user.</td>
           <td>-</td>
-          <td>{ status: "Success", data: [...] }</td>
+          <td>{ status: "Success", message: "Bookings by User Retrieved", data: [{ id_booking: 10 }] }</td>
           <td>Booking</td>
         </tr>
         <tr>
-          <td>POST</td>
-          <td>/bookings</td>
-          <td>Buat booking baru.</td>
-          <td>{ id_user, id_schedule, total_price, seats: [1,2,3] }</td>
-          <td>{ status: "Success", message: "Booking Created", data: {...} }</td>
-          <td>Booking, BookingSeat</td>
-        </tr>
-        <tr>
-          <td>PUT</td>
-          <td>/bookings/:id</td>
-          <td>Update booking.</td>
-          <td>{ id_user, id_schedule, total_price, seats }</td>
-          <td>{ status: "Success", message: "Booking Updated" }</td>
-          <td>Booking</td>
-        </tr>
-        <tr>
-          <td>DELETE</td>
-          <td>/bookings/:id</td>
-          <td>Hapus booking.</td>
+          <td>GET</td>
+          <td>/booking-detail/:id</td>
+          <td>Menampilkan detail booking (dengan seat dan jadwal).</td>
           <td>-</td>
-          <td>{ status: "Success", message: "Booking Deleted" }</td>
+          <td>{ status: "Success", message: "Booking Detail Retrieved", data: { id_booking: 10, schedule: {...}, seats: [...] } }</td>
           <td>Booking</td>
         </tr>
 
-        <!-- === BOOKING_SEAT === -->
+        <!-- === BOOKING SEAT === -->
         <tr>
           <td>GET</td>
           <td>/booking_seats</td>
-          <td>Ambil semua data relasi booking_seat.</td>
+          <td>Menampilkan seluruh data relasi booking dan seat.</td>
           <td>-</td>
-          <td>{ status: "Success", message: "...", data: [...] }</td>
+          <td>{ status: "Success", message: "Booking Seats Retrieved", data: [{ id_booking: 10, id_seat: 1 }] }</td>
           <td>BookingSeat</td>
         </tr>
       </tbody>
