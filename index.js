@@ -13,6 +13,7 @@ import ScheduleRoute from "./routes/ScheduleRoute.js";
 import SeatRoute from "./routes/SeatRoute.js";
 
 const app = express();
+app.set("view engine", "ejs");
 app.use(cookieParser());
 
 const allowedOrigins = [
