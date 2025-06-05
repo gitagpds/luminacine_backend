@@ -127,29 +127,14 @@ async function updateBooking(req, res) {
       throw error;
     }
 
-    // Update data booking utama
-    const result = await Booking.update(
-      { id_user, id_schedule, total_price },
-      { where: { id_booking: req.params.id } }
-    );
+    const result = await Booking.update(req.body, {
+      where: { id_booking: req.params.id },
+    });
 
     if (result[0] === 0) {
       const error = new Error("Tidak ada data yang berubah");
       error.statusCode = 400;
       throw error;
-    }
-
-    // Hapus relasi booking_seats lama
-    await BookingSeats.destroy({
-      where: { id_booking: req.params.id },
-    });
-
-    // Insert relasi booking_seats baru sesuai seats baru
-    for (const seatId of seats) {
-      await BookingSeats.create({
-        id_booking: req.params.id,
-        id_seat: seatId,
-      });
     }
 
     return res.status(200).json({
