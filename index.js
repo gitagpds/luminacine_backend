@@ -19,7 +19,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8080",
-  "http://localhost:50963",
+  "http://localhost:52301",
   "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
 ];
 
