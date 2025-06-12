@@ -20,6 +20,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8080",
   "http://localhost:62344",
+  "http://localhost:55745",
   "https://luminacine-dot-g-07-450802.uc.r.appspot.com",
 ];
 
